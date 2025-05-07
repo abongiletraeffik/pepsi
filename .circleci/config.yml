@@ -2,12 +2,13 @@ version: 2.1
 
 jobs:
   build:
-    machine:
-      image: linux-cuda-12:default
-    resource_class: gpu.nvidia.small.gen2
+    docker:
+      - image: cimg/deploy:2025.01-node
+    resource_class: large
     steps:
-      - run: nvidia-smi
-      - run: docker run --gpus all nvidia/cuda:9.0-base nvidia-smi
+      - run:
+          name: Show Node.js Version and CPU Info
+          command: node -v && lscpu
 
 workflows:
   build-workflow:
